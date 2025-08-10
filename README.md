@@ -1,6 +1,6 @@
 # OutsideTheVoiceBox
 
-Codes and samples for "Outside the Voice Box: Rethinking AI Voice Design Beyond Embodied Constraints" (under review) that presents four proposed concepts of disembodied flexibility for Text-to-Speech (TTS) systems:
+Codes and [samples](https://github.com/evaszekely/OutsideTheVoiceBox/tree/main/samples) for "Outside the Voice Box: Rethinking AI Voice Design Beyond Embodied Constraints" (under review) that presents four proposed concepts of disembodied flexibility for Text-to-Speech (TTS) systems:
 
 We generated the audio illustrations for each concept by combining and modifying recent neural TTS methods to achieve the required controllability. The corresponding code and implementation details are shared in this repo.
 
