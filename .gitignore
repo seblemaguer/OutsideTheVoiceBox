@@ -1,0 +1,8 @@
+# Python
+__pycache__/
+*.egg-info/
+.venv/
+
+# Documentation defaults
+models/
+samples_by_concept/

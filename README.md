@@ -4,6 +4,25 @@ Codes and [samples](https://github.com/evaszekely/OutsideTheVoiceBox/tree/main/s
 
 We generated the audio illustrations for each concept by combining and modifying recent neural TTS methods to achieve the required controllability. The corresponding code and implementation details are shared in this repo.
 
+## Prepare the environment
+It is recommended to create an environment using `uv`, first.
+
+Then, after activating the enviromnet, you can simply install the package
+```sh
+pip install -e .
+```
+
+## Running everything
+### Palette
+```sh
+python src/outside_voice_box/xtts_palette.py models/GPT_XTTS_v2.0_vctk_rfrm samples_by_concept/palette
+```
+
+### Ombre
+```sh
+python src/outside_voice_box/xtts_ombre.py models/GPT_XTTS_v2.0_vctk_rfrm samples_by_concept/ombre
+```
+
 ## Concepts
 ### Essence
 The TTS model trained on spontaneous speech described in [1] used to generate the audio samples which exhibit embodied human-like spontaneous expressions such as laughter, tongue clicks and breathing. An implementation of this with pre-trained models can be found at https://github.com/evaszekely/So_To_Speak

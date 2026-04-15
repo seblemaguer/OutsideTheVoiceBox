@@ -274,7 +274,7 @@ class Xtts(BaseTTS):
             for i in range(0, audio.shape[1], 22050 * chunk_length):
                 audio_chunk = audio[:, i : i + 22050 * chunk_length]
 
-                # if the chunk is too short ignore it 
+                # if the chunk is too short ignore it
                 if audio_chunk.size(-1) < 22050 * 0.33:
                     continue
 
@@ -332,7 +332,6 @@ class Xtts(BaseTTS):
         librosa_trim_db=None,
         sound_norm_refs=False,
         load_sr=22050,
-        audio_weights = None,
     ):
         """Get the conditioning latents for the GPT model from the given audio.
 
@@ -369,33 +368,18 @@ class Xtts(BaseTTS):
             audios.append(audio)
 
         # merge all the audios and compute the latents for the gpt
-        if audio_weights is None:
-            full_audio = torch.cat(audios, dim=-1)
-            gpt_cond_latents = self.get_gpt_cond_latents(
-                full_audio, load_sr, length=gpt_cond_len, chunk_length=gpt_cond_chunk_len
-            )  # [1, 1024, T]
-        else:
-            comb_embs = []
-            num_audio = min(len(audios), len(audio_weights))
-            for j in range(num_audio):
-                ind_emb = self.get_gpt_cond_latents(
-                    audios[j], load_sr, length=gpt_cond_len, chunk_length=gpt_cond_chunk_len)
-                comb_embs.append(ind_emb)
-            weighted_embs = sum(w * t for w, t in zip(audio_weights[:num_audio], comb_embs))
-            gpt_cond_latents = weighted_embs / sum(audio_weights[:num_audio])
+        full_audio = torch.cat(audios, dim=-1)
+        gpt_cond_latents = self.get_gpt_cond_latents(
+            full_audio, load_sr, length=gpt_cond_len, chunk_length=gpt_cond_chunk_len
+        )  # [1, 1024, T]
 
         if speaker_embeddings:
-            if audio_weights is None:
-                speaker_embedding = torch.stack(speaker_embeddings)
-                speaker_embedding = speaker_embedding.mean(dim=0)
-            else:
-                num_emb = min(len(speaker_embeddings), len(audio_weights))
-                speaker_embs = sum(w * t for w, t in zip(audio_weights[:num_emb], speaker_embeddings))
-                speaker_embedding = speaker_embs / sum(audio_weights[:num_emb])
+            speaker_embedding = torch.stack(speaker_embeddings)
+            speaker_embedding = speaker_embedding.mean(dim=0)
 
         return gpt_cond_latents, speaker_embedding
 
-    def synthesize(self, text, config, speaker_wav, language, speaker_id=None, audio_weights=None, **kwargs):
+    def synthesize(self, text, config, speaker_wav, language, speaker_id=None, **kwargs):
         """Synthesize speech with the given input text.
 
         Args:
@@ -432,7 +416,7 @@ class Xtts(BaseTTS):
             "max_ref_len": config.max_ref_len,
             "sound_norm_refs": config.sound_norm_refs,
         })
-        return self.full_inference(text, speaker_wav, language, audio_weights, **settings)
+        return self.full_inference(text, speaker_wav, language, **settings)
 
     @torch.inference_mode()
     def full_inference(
@@ -440,7 +424,6 @@ class Xtts(BaseTTS):
         text,
         ref_audio_path,
         language,
-        audio_weights=None,
         # GPT inference
         temperature=0.75,
         length_penalty=1.0,
@@ -500,7 +483,6 @@ class Xtts(BaseTTS):
             gpt_cond_chunk_len=gpt_cond_chunk_len,
             max_ref_length=max_ref_len,
             sound_norm_refs=sound_norm_refs,
-            audio_weights=audio_weights,
         )
 
         return self.inference(
