@@ -19,6 +19,11 @@ dependencies = [
   "torchaudio==2.9.1",
   "torchcodec==0.9.0",
   "transformers==5.0.0",
+  "unidecode",
+  "librosa",
+  "pandas",
+  "matplotlib",
+  "g2p_en"
 ]
 
 [project.optional-dependencies]
