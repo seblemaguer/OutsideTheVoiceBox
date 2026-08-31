@@ -23,7 +23,9 @@ dependencies = [
   "librosa",
   "pandas",
   "matplotlib",
-  "g2p_en"
+  "g2p_en",
+  "hydra-core",
+  "omegaconf"
 ]
 
 [project.optional-dependencies]

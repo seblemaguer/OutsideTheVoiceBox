@@ -12,18 +12,25 @@ Then, after activating the enviromnet, you can simply install the package
 pip install -e .
 ```
 
-## Running everything
+## Running default configuration
+### Essence
+TODO
+
+### Expand
+TODO
+
 ### Palette
 ```sh
-python src/outside_voice_box/xtts_palette.py models/GPT_XTTS_v2.0_vctk_rfrm samples_by_concept/palette
+python src/outside_voice_box/__main__.py --config-path $PWD/models/ --config-name=palette
 ```
 
-### Ombre
+### Ombré
 ```sh
-python src/outside_voice_box/xtts_ombre.py models/GPT_XTTS_v2.0_vctk_rfrm samples_by_concept/ombre
+python src/outside_voice_box/__main__.py --config-path $PWD/models/ --config-name=ombre
 ```
 
-## Concepts
+
+## Quick presentation of the different part
 ### Essence
 The TTS model trained on spontaneous speech described in [1] used to generate the audio samples which exhibit embodied human-like spontaneous expressions such as laughter, tongue clicks and breathing. An implementation of this with pre-trained models can be found at https://github.com/evaszekely/So_To_Speak
 Voice quality variations (breathy voice and vocal fry) were added using the open-source voice conversion tool CreakVC [2] with published implementation at https://github.com/Hfkml/CreakVC

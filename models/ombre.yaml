@@ -1,0 +1,22 @@
+log_level: logging.DEBUG
+data:
+  model_dir: "./models/GPT_XTTS_v2.0_vctk_rfrm"
+  output_file: "output/test.wav"
+  text: "This is the text to synthesize"
+
+model:
+  name: "tts_models/multilingual/multi-dataset/xtts_v2"
+  checkpoint_file: "${data.model_dir}/best_model.pth"
+  config_file: "${data.model_dir}/config.json"
+
+reference_wav_files:
+  - "${data.model_dir}/ref_samples/p226_023.wav"
+  - "${data.model_dir}/ref_samples/p262_023.wav"
+
+parameters:
+  temperature: 0.9
+  speed: 1.1
+  weights: [[1.25, -0.25], [0.5, 0.5]]
+  repetition_penalty: 20.0
+  language: "en"
+  inverse: false
